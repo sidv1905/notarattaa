@@ -5,6 +5,7 @@ import { styled } from "@mui/material/styles";
 import Drawer from "@mui/material/Drawer";
 import TextField from "@mui/material/TextField";
 import { gql, useMutation } from "@apollo/client";
+import { client } from "../../main";
 
 const AddButton = styled(Button)({
   boxShadow: "none",
@@ -80,9 +81,12 @@ export default function Sidebar() {
           },
         },
       })
-        .then((res) => {
+        .then(async (res) => {
           console.log(res);
           submissionText = "Submission successful!";
+          await client.refetchQueries({
+            include: "all", // Consider using "active" instead!
+          });
           setOpen(false);
         })
         .catch((error) => {
