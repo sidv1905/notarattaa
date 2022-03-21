@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import Drawer from "@mui/material/Drawer";
 import TextField from "@mui/material/TextField";
+import { gql, useMutation } from "@apollo/client";
 
 const AddButton = styled(Button)({
   boxShadow: "none",
@@ -41,6 +42,14 @@ const AddButton = styled(Button)({
   },
 });
 
+const ADD_NOTE = gql`
+  mutation AddTodo($objects: [notes_insert_input]!) {
+    insert_notes(objects: $objects) {
+      affected_rows
+    }
+  }
+`;
+
 export default function Sidebar() {
   const [open, setOpen] = React.useState(false);
   const [valueText, setValueText] = React.useState("");
@@ -48,8 +57,29 @@ export default function Sidebar() {
     setValueText(event.target.value);
   };
 
+  let submissionText = "";
+  const [addNote, { data, loading, error }] = useMutation(ADD_NOTE);
+  if (loading) submissionText = "Submitting...";
+  if (error) submissionText = `Submission error! ${error.message}`;
+
   const handleSubmit = () => {
     console.log(valueText);
+
+    addNote({
+      variables: {
+        objects: {
+          text: valueText,
+        },
+      },
+    })
+      .then((res) => {
+        console.log(res);
+        submissionText = "Submission successful!";
+        setOpen(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   return (
     <Box
@@ -68,7 +98,13 @@ export default function Sidebar() {
         Add Note
       </AddButton>
       <Drawer open={open} anchor="left">
-        <Box p={2}>
+        <Box
+          style={{
+            display: "flex",
+            flexDirection: "column",
+          }}
+          p={4}
+        >
           <TextField
             id="outlined-multiline-flexible"
             label="Add note text"
@@ -77,10 +113,11 @@ export default function Sidebar() {
             value={valueText}
             onChange={handleChange}
           />
+          <AddButton onClick={handleSubmit} variant="contained" disableRipple>
+            Submit Note
+          </AddButton>
+          {submissionText}
         </Box>
-        <AddButton onClick={handleSubmit} variant="contained" disableRipple>
-          Submit Note
-        </AddButton>
       </Drawer>
     </Box>
   );
