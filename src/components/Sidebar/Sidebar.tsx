@@ -31,7 +31,6 @@ const AddButton = styled(Button)({
   "&:active": {
     boxShadow: "none",
     backgroundColor: "#feecf3",
-    backgroundColor: "#feecf3",
     borderColor: "#005cbf",
   },
   "&:focus": {

@@ -31,6 +31,8 @@ function App() {
         xs={10}
         style={{
           height: "100%",
+          padding: "20px",
+          display: "flex",
         }}
       >
         <NotesContainer />
