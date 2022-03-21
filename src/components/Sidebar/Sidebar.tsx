@@ -2,6 +2,9 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
+import Drawer from "@mui/material/Drawer";
+import TextField from "@mui/material/TextField";
+
 const AddButton = styled(Button)({
   boxShadow: "none",
   textTransform: "none",
@@ -39,6 +42,15 @@ const AddButton = styled(Button)({
 });
 
 export default function Sidebar() {
+  const [open, setOpen] = React.useState(false);
+  const [valueText, setValueText] = React.useState("");
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValueText(event.target.value);
+  };
+
+  const handleSubmit = () => {
+    console.log(valueText);
+  };
   return (
     <Box
       sx={{
@@ -46,9 +58,30 @@ export default function Sidebar() {
       }}
       p={2}
     >
-      <AddButton variant="contained" disableRipple>
+      <AddButton
+        onClick={() => {
+          setOpen(true);
+        }}
+        variant="contained"
+        disableRipple
+      >
         Add Note
       </AddButton>
+      <Drawer open={open} anchor="left">
+        <Box p={2}>
+          <TextField
+            id="outlined-multiline-flexible"
+            label="Add note text"
+            multiline
+            maxRows={4}
+            value={valueText}
+            onChange={handleChange}
+          />
+        </Box>
+        <AddButton onClick={handleSubmit} variant="contained" disableRipple>
+          Submit Note
+        </AddButton>
+      </Drawer>
     </Box>
   );
 }
