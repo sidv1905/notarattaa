@@ -12,7 +12,11 @@ export default function NotesCard() {
           opacity: [0.9, 0.8, 0.7],
         },
         color: "black",
+        cursor: "pointer",
       }}
-    ></Box>
+      p={4}
+    >
+      sadasd
+    </Box>
   );
 }
