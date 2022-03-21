@@ -61,8 +61,10 @@ export default function Sidebar() {
   if (loading) submissionText = "Submitting...";
   if (error) submissionText = `Submission error! ${error.message}`;
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    var count = (event.target.value.match(/is/g) || []).length;
+    var count = event.target.value.length;
+    console.log(count);
     if (count < 180) {
+      seterrorInput(false);
       setValueText(event.target.value);
     } else {
       seterrorInput(true);
@@ -115,10 +117,12 @@ export default function Sidebar() {
           p={4}
         >
           <TextField
-            error
+            error={errorInput}
             id="outlined-multiline-flexible"
             label="Add note text"
-            helperText="Characters More than 180. Exceeding the limit"
+            helperText={
+              errorInput ? "Characters More than 180. Exceeding the limit" : ""
+            }
             multiline
             maxRows={4}
             value={valueText}
