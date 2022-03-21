@@ -11,7 +11,18 @@ export default function Header() {
       }}
       p={1}
     >
-      <Typography variant="h4" color="inherit">
+      <Typography
+        variant="h4"
+        sx={{
+          fontSize: {
+            lg: 30,
+            md: 25,
+            sm: 25,
+            xs: 20,
+          },
+        }}
+        color="inherit"
+      >
         Welcome to notaratta
       </Typography>
     </Box>

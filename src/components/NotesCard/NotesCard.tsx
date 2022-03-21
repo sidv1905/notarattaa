@@ -1,5 +1,6 @@
 import React from "react";
 import Box from "@mui/material/Box";
+import { Typography } from "@mui/material";
 
 interface NotesCardProps {
   text: string;
@@ -19,6 +20,7 @@ export default function NotesCard({ text, id }: NotesCardProps) {
         },
         color: "black",
         cursor: "pointer",
+        wordWrap: "break-word",
       }}
       p={4}
       m={2}
