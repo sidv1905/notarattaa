@@ -53,33 +53,42 @@ const ADD_NOTE = gql`
 export default function Sidebar() {
   const [open, setOpen] = React.useState(false);
   const [valueText, setValueText] = React.useState("");
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValueText(event.target.value);
-  };
+
+  const [errorInput, seterrorInput] = React.useState(false);
 
   let submissionText = "";
   const [addNote, { data, loading, error }] = useMutation(ADD_NOTE);
   if (loading) submissionText = "Submitting...";
   if (error) submissionText = `Submission error! ${error.message}`;
-
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    var count = (event.target.value.match(/is/g) || []).length;
+    if (count < 180) {
+      setValueText(event.target.value);
+    } else {
+      seterrorInput(true);
+    }
+  };
   const handleSubmit = () => {
     console.log(valueText);
-
-    addNote({
-      variables: {
-        objects: {
-          text: valueText,
+    if (!errorInput) {
+      addNote({
+        variables: {
+          objects: {
+            text: valueText,
+          },
         },
-      },
-    })
-      .then((res) => {
-        console.log(res);
-        submissionText = "Submission successful!";
-        setOpen(false);
       })
-      .catch((error) => {
-        console.log(error);
-      });
+        .then((res) => {
+          console.log(res);
+          submissionText = "Submission successful!";
+          setOpen(false);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      console.log("Please enter a valid note");
+    }
   };
   return (
     <Box
@@ -106,8 +115,10 @@ export default function Sidebar() {
           p={4}
         >
           <TextField
+            error
             id="outlined-multiline-flexible"
             label="Add note text"
+            helperText="Characters More than 180. Exceeding the limit"
             multiline
             maxRows={4}
             value={valueText}
