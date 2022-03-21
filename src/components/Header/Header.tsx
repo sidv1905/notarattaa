@@ -7,6 +7,7 @@ export default function Header() {
     <Box
       sx={{
         height: "100%",
+        backgroundColor: "#feefc3",
       }}
       p={1}
     >

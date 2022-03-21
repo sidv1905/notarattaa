@@ -6,8 +6,6 @@ import Header from "../components/Header/Header";
 import Sidebar from "../components/Sidebar/Sidebar";
 import NotesContainer from "../components/NotesContainer/NotesContainer";
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <Grid container className="main-container">
       <Grid
@@ -15,7 +13,6 @@ function App() {
         xs={12}
         style={{
           height: 60,
-          backgroundColor: "green",
         }}
       >
         <Header />
@@ -25,7 +22,6 @@ function App() {
         xs={2}
         style={{
           height: "100%",
-          backgroundColor: "blue",
         }}
       >
         <Sidebar />
@@ -35,7 +31,6 @@ function App() {
         xs={10}
         style={{
           height: "100%",
-          backgroundColor: "red",
         }}
       >
         <NotesContainer />
