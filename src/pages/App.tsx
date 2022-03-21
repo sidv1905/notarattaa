@@ -33,6 +33,7 @@ function App() {
           height: "100%",
           padding: "20px",
           display: "flex",
+          flexWrap: "wrap",
         }}
       >
         <NotesContainer />

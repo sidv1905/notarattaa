@@ -1,6 +1,12 @@
 import React from "react";
 import Box from "@mui/material/Box";
-export default function NotesCard() {
+
+interface NotesCardProps {
+  text: string;
+  id: number;
+}
+
+export default function NotesCard({ text, id }: NotesCardProps) {
   return (
     <Box
       sx={{
@@ -15,8 +21,9 @@ export default function NotesCard() {
         cursor: "pointer",
       }}
       p={4}
+      m={2}
     >
-      sadasd
+      {text}
     </Box>
   );
 }
